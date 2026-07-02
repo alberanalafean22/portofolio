@@ -55,23 +55,40 @@
         a:hover { color: var(--accent-blue); }
 
         /* THEME & TRANSLATE CONTROLS */
+        
+                /* Update pada bagian .top-controls */
         .top-controls {
             position: fixed;
             top: 30px;
             left: 30px;
             display: flex;
-            gap: 15px;
+            flex-direction: column; /* Mengubah susunan menjadi vertikal */
+            gap: 12px;              /* Jarak antar tombol */
             z-index: 10000;
-            align-items: center;
+            align-items: flex-start;
         }
-        .control-btn {
-            width: 50px; height: 50px; border-radius: 12px;
-            background: var(--bg-surface); backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color); color: var(--text-primary);
-            font-size: 1.2rem; cursor: pointer; display: flex;
-            justify-content: center; align-items: center; transition: all 0.3s ease;
+
+        /* Memastikan dropdown muncul di sebelah kanan tombol agar tidak tertutup */
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
         }
-        .control-btn:hover { background: var(--text-primary); color: var(--bg-base); }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 0;                 /* Sejajar dengan tombol */
+            left: 100%;             /* Muncul di sebelah kanan tombol */
+            margin-left: 10px;      /* Jarak dari tombol */
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 150px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
         
         /* Google Translate Widget Styling */
         #google_translate_element select {
@@ -301,11 +318,12 @@
 <body>
 
     <div class="top-controls">
+        <!-- Tombol Dark Mode -->
         <button id="themeToggleBtn" class="control-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
             <i class="fa-solid fa-sun"></i>
         </button>
         
-        <!-- Ganti bagian language switcher lama dengan ini -->
+        <!-- Tombol Bahasa (Dropdown) -->
         <div class="lang-dropdown">
             <button class="control-btn" onclick="toggleDropdown()" aria-label="Language">🌐</button>
             <div id="langDropdown" class="dropdown-content">
