@@ -58,14 +58,19 @@
         
                 /* Update pada bagian .top-controls */
         .top-controls {
-            position: fixed;
-            top: 30px;
-            left: 30px;
-            display: flex;
-            flex-direction: column; /* Mengubah susunan menjadi vertikal */
-            gap: 12px;              /* Jarak antar tombol */
-            z-index: 10000;
-            align-items: flex-start;
+            width: 55px;          /* Ditingkatkan agar lebih besar */
+                height: 55px;         /* Ditingkatkan agar lebih besar */
+                border-radius: 14px; 
+                background: var(--bg-surface); 
+                backdrop-filter: blur(10px);
+                border: 1px solid var(--border-color); 
+                color: var(--text-primary);
+                font-size: 1.4rem;    /* Ukuran ikon diperbesar */
+                cursor: pointer; 
+                display: flex;
+                justify-content: center; 
+                align-items: center; 
+                transition: all 0.3s ease;
         }
 
         /* Memastikan dropdown muncul di sebelah kanan tombol agar tidak tertutup */
