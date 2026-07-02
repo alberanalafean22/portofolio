@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alber Analafean | Portofolio</title>
+    <title translate="no">Alber Analafean | Data & AI Engineer</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -18,6 +18,16 @@
             --accent-purple: #8b5cf6;
             --gradient-text: linear-gradient(135deg, #60a5fa, #a78bfa);
             --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        /* LIGHT MODE VARIABLES */
+        [data-theme="light"] {
+            --bg-base: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -36,12 +46,65 @@
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
                 radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
         .mono-text { font-family: 'JetBrains Mono', monospace; }
         a { text-decoration: none; color: inherit; transition: color 0.2s; }
         a:hover { color: var(--accent-blue); }
+
+        /* THEME & TRANSLATE CONTROLS */
+        
+                /* Update pada bagian .top-controls */
+        .top-controls {
+                    position: fixed;
+            top: 30px;
+            left: 30px;
+            display: flex;
+            flex-direction: column; /* Mengubah susunan menjadi vertikal */
+            gap: 12px;              /* Jarak antar tombol */
+            z-index: 10000;
+            align-items: flex-start;
+        }
+
+        /* Memastikan dropdown muncul di sebelah kanan tombol agar tidak tertutup */
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 0;                 /* Sejajar dengan tombol */
+            left: 100%;             /* Muncul di sebelah kanan tombol */
+            margin-left: 10px;      /* Jarak dari tombol */
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 150px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* Google Translate Widget Styling */
+        #google_translate_element select {
+            background: var(--bg-surface); color: var(--text-primary);
+            border: 1px solid var(--border-color); padding: 12px;
+            border-radius: 12px; font-family: 'Inter', sans-serif;
+            font-weight: 600; outline: none; cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #google_translate_element select:hover { border-color: var(--accent-blue); }
+        .goog-te-gadget { font-family: 'Inter', sans-serif !important; color: transparent !important; }
+        .goog-te-gadget .goog-te-combo { margin: 0 !important; }
+        .goog-logo-link { display: none !important; }
+        .goog-te-gadget span { display: none !important; }
+        body { top: 0 !important; } 
+        .skiptranslate iframe { display: none !important; }
 
         /* MENU BUTTON & OVERLAY */
         .menu-btn {
@@ -61,6 +124,9 @@
             z-index: 9999; display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        [data-theme="light"] .menu-overlay {
+            background: rgba(248, 250, 252, 0.98);
         }
         .menu-overlay.active { opacity: 1; pointer-events: auto; }
         .menu-overlay ul { list-style: none; text-align: left; }
@@ -101,6 +167,9 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             transform: rotate(3deg); transition: transform 0.4s ease;
         }
+        [data-theme="light"] .hero-image-wrapper {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
         .hero-image-wrapper:hover { transform: rotate(0deg) translateY(-5px); }
         .hero-image-wrapper img {
             width: 100%; height: 100%; object-fit: cover; object-position: center;
@@ -113,6 +182,7 @@
             border: 1px solid rgba(59, 130, 246, 0.2); color: #93c5fd;
             font-size: 0.85rem; font-weight: 600; margin-bottom: 30px;
         }
+        [data-theme="light"] .status-badge { color: #2563eb; }
         .status-dot { width: 8px; height: 8px; background: #3b82f6; border-radius: 50%; box-shadow: 0 0 10px #3b82f6; }
 
         #home h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; }
@@ -125,6 +195,7 @@
             transition: all 0.3s ease; height: 100%;
         }
         .card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-4px); }
+        [data-theme="light"] .card:hover { border-color: rgba(0,0,0,0.2); }
         .card h3 { font-size: 1.25rem; margin-bottom: 12px; color: var(--text-primary); }
         .card p { color: var(--text-secondary); font-size: 0.95rem; }
 
@@ -175,10 +246,105 @@
             #home h1 { font-size: 2.5rem; }
             .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
             .menu-overlay ul li a { font-size: 1.3rem; }
+            .top-controls { flex-direction: column; align-items: flex-start; top: 20px; left: 20px; }
+        }
+
+                /* Styling untuk Switcher Bahasa */
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+            margin-right: 10px;
+        }
+
+                    /* Update styling untuk kontrol tombol agar lebih besar */
+            .control-btn {
+                width: 50px;           /* Ukuran lebar */
+                height: 50px;          /* Ukuran tinggi */
+                border-radius: 12px;   /* Konsisten dengan menu-btn */
+                background: var(--bg-surface);
+                border: 1px solid var(--border-color);
+                color: var(--text-primary);
+                font-size: 1.2rem;     /* Ukuran ikon/teks di dalam */
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.3s ease;
+            }
+            
+            .control-btn:hover {
+                background: var(--text-primary);
+                color: var(--bg-base);
+            }
+
+        /* Sembunyikan widget Google Translate default */
+        .goog-te-banner-frame.skiptranslate, 
+        .goog-te-gadget-simple {
+            display: none !important;
+        }
+        #google_translate_element {
+            display: none;
+        }
+
+                /* Container Dropdown */
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 60px; /* Posisi di bawah tombol */
+            left: 0;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 150px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .dropdown-content.show { display: block; }
+
+        .dropdown-content div {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            color: var(--text-primary);
+            transition: 0.2s;
+        }
+
+        .dropdown-content div:hover {
+            background: var(--accent-blue);
+            color: white;
         }
     </style>
 </head>
 <body>
+
+    <div class="top-controls">
+        <!-- Tombol Dark Mode -->
+        <button id="themeToggleBtn" class="control-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+            <i class="fa-solid fa-sun"></i>
+        </button>
+        
+        <!-- Tombol Bahasa (Dropdown) -->
+        <div class="lang-dropdown">
+            <button class="control-btn" onclick="toggleDropdown()" aria-label="Language">🌐</button>
+            <div id="langDropdown" class="dropdown-content">
+                <div onclick="changeLanguage('id')">🇮🇩 Indonesia</div>
+                <div onclick="changeLanguage('en')">🇺🇸 English</div>
+                <div onclick="changeLanguage('ja')">🇯🇵 Japan</div>
+                <div onclick="changeLanguage('ko')">🇰🇷 Korean</div>
+                <div onclick="changeLanguage('de')">🇩🇪 Deutsch</div>
+            </div>
+        </div>
+        
+        <!-- Hidden Google Translate Element -->
+        <div id="google_translate_element"></div>
+    </div>
 
     <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Toggle Menu">
         <i class="fa-solid fa-bars"></i>
@@ -188,14 +354,15 @@
         <ul>
             <li><a href="#home" onclick="toggleMenu()"><span>00.</span> Home</a></li>
             <li><a href="#about" onclick="toggleMenu()"><span>01.</span> About</a></li>
-            <li><a href="#experience" onclick="toggleMenu()"><span>02.</span> Experience</a></li>
-            <li><a href="#projects" onclick="toggleMenu()"><span>03.</span> Projects</a></li>
-            <li><a href="#achievements" onclick="toggleMenu()"><span>04.</span> Achievements</a></li>
-            <li><a href="#organization" onclick="toggleMenu()"><span>05.</span> Organization</a></li>
-            <li><a href="#certification" onclick="toggleMenu()"><span>06.</span> Certification</a></li>
-            <li><a href="#publication" onclick="toggleMenu()"><span>07.</span> Publication</a></li>
-            <li><a href="#skills" onclick="toggleMenu()"><span>08.</span> Skills</a></li>
-            <li><a href="#contact" onclick="toggleMenu()"><span>09.</span> Contact</a></li>
+            <li><a href="#education" onclick="toggleMenu()"><span>02.</span> Education</a></li>
+            <li><a href="#experience" onclick="toggleMenu()"><span>03.</span> Experience</a></li>
+            <li><a href="#projects" onclick="toggleMenu()"><span>04.</span> Projects</a></li>
+            <li><a href="#achievements" onclick="toggleMenu()"><span>05.</span> Achievements</a></li>
+            <li><a href="#organization" onclick="toggleMenu()"><span>06.</span> Organization</a></li>
+            <li><a href="#certification" onclick="toggleMenu()"><span>07.</span> Certification</a></li>
+            <li><a href="#publication" onclick="toggleMenu()"><span>08.</span> Publication</a></li>
+            <li><a href="#skills" onclick="toggleMenu()"><span>09.</span> Skills</a></li>
+            <li><a href="#contact" onclick="toggleMenu()"><span>10.</span> Contact</a></li>
         </ul>
     </div>
 
@@ -205,9 +372,8 @@
                 <div class="status-dot"></div> Open to Work
             </div>
             <h2 class="mono-text" style="color: var(--accent-purple); font-size: 1.2rem; margin-bottom: 10px;">Hello, World! I'm</h2>
-            <h1>Alber Analafean, S.Si.D.<span class="gradient-text"></span></h1>
+            <h1><span class="notranslate">Alber Analafean</span>, <span class="notranslate">S.Si.D.</span><span class="gradient-text"></span></h1>
             <h2><span class="gradient-text">Data, AI & Engineering</span></h2>
-            <p>AI Engineer | ML Engineer | Cloud Engineer | Data Analyst | Computer Vision Engineer | Data Scientist | Data Engineer | GIS/Remote Sensing/Geospatial Specialist | Automation Engineer</p><br>
             <p>Hai, ini merupakan website portofolio saya dan juga saya sedang terbuka untuk bekerja saat ini. Silahkan Hubungi saya jika anda menawarkan proyek ataupun lowongan pekerjaan di perusahaan / Instansi / Startup anda.</p>
             
             <div class="social-links">
@@ -219,7 +385,7 @@
         </div>
         <div class="hero-visual">
             <div class="hero-image-wrapper">
-                <img src="https://alberanalafean22.github.io/portofolio/A.jpeg" alt="Alber Analafean">
+                <img src="https://alberanalafean22.github.io/portofolio/poto.jpg" alt="Alber Analafean" translate="no">
             </div>
         </div>
     </section>
@@ -227,39 +393,56 @@
     <section id="about">
         <div class="section-header">
             <div class="section-subtitle">01. ABOUT ME</div>
-            <h2 class="section-title">Tentang & Pendidikan</h2>
+            <h2 class="section-title">Tentang Saya</h2>
         </div>
-        <div class="grid-2">
+        <div class="grid-1">
             <div class="card">
                 <h3>Profil Profesional</h3>
-                <p>Saya adalah seorang profesional data yang terbiasa bekerja di ekosistem Google Cloud Platform, BigQuery, dan arsitektur machine learning. Saya berfokus pada efisiensi operasional bisnis melalui rekayasa perangkat software dan script automasi. Keahlian utama saya mencakup pengembangan full-stack untuk aplikasi data, serta ekstraksi informasi mendalam dari citra satelit (Computer Vision).</p>
+                <p>Saya adalah seorang profesional data terkait Data Science, Data Analysis, Data Engineering, AI, Cloud Computing, Machine Learning, Deep Learning, Computer Vision serta GIS dan analisis Geospasial. Memiliki pengalaman sebagai Asisten Pranata Komputer di Badan Pusat Statistik Kota Solok melalui program Maganghub Kementerian Ketenagakerjaan RI, serta pernah internship sebagai Data Scientist Intern di Badan Pusat Statistik Provinsi Lampung.</p><br>
+                <p>Berpengalaman dalam berbagai pengolahan dan analisis data, machine learning, deep learning, computer vision, cloud computing, otomasi data, analisis geospasial, pemetaan, visualisasi data dan lainnya. Saya memiliki kemampuan analitis yang kuat serta problem solving, adaptif, suka mempelajari hal yang baru serta kolaboratif dalam mengimplementasikan solusi berbasis data</p>
             </div>
+        </div>
+    </section>
 
-            <div class="card">
-            <h3>Riwayat Pendidikan</h3>
-            <p style="color: var(--text-primary); font-weight: 600; margin-bottom: 5px;">
-                <a href="https://wisuda.itera.ac.id/validasi-ijazah/eyJpdiI6ImcxZkFHZWthVCtkTkZEeUNPODlHVWc9PSIsInZhbHVlIjoiUWlna29JZGx4THJoaVhBK2ZsWVJQWU5ZQkRuQU1sUVFWZjBNUnM3T2VFOD0iLCJtYWMiOiJjODhhN2E2N2QwZDBmNWIxMWFjYzgwZDYwMWNiM2FlMTFhZWE3YjcwOWVlODc3MzM0ZTIzNmIwZjBhMDFlMGUwIiwidGFnIjoiIn0=" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">
-                    Institut Teknologi Sumatera (ITERA) 
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px; vertical-align: middle; margin-bottom: 2px;">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                        <polyline points="15 3 21 3 21 9"></polyline>
-                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                </a> 
-            </p> 
-            <p> September 2021 - September 2025</p>
-            <p class="mono-text" style="color: var(--accent-blue); font-size: 0.9rem; margin-bottom: 15px;">Sarjana Sains Data (S.Si.D.) - Sains Data</p>
-            <p>Lulus pada September 2025 dengan IPK 3.19 dengan Tugas Akhir(Skripsi) dengan topik terkait implementasi Deep Learning dan Computer Vision dalam Segmentasi Burned Area (area terbakar) di Sumatera Selatan dengan memanfaatkan data citra satelit. Selama masa studi, saya berfokus riset dan pembelajaran pada big data, deep learning, image processing serta analisis geospasial, yang menjadi fondasi kuat untuk karier teknis saya saat ini.</p>
-        </div>
-        </div>
+    <section id="education">
+            <div class="section-header">
+                <div class="section-subtitle">02. EDUCATION</div>
+                <h2 class="section-title">Pendidikan</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3><a href="https://wisuda.itera.ac.id/validasi-ijazah/eyJpdiI6ImcxZkFHZWthVCtkTkZEeUNPODlHVWc9PSIsInZhbHVlIjoiUWlna29JZGx4THJoaVhBK2ZsWVJQWU5ZQkRuQU1sUVFWZjBNUnM3T2VFOD0iLCJtYWMiOiJjODhhN2E2N2QwZDBmNWIxMWFjYzgwZDYwMWNiM2FlMTFhZWE3YjcwOWVlODc3MzM0ZTIzNmIwZjBhMDFlMGUwIiwidGFnIjoiIn0=" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">
+                    Institut Teknologi Sumatera (ITERA)</a></h3>
+                    <h4>Prodi Sains Data, Fakultas Sains | September 2021 - September 2025</h4>
+                    <h4>Sarjana Sains Data (<span class="notranslate">S.Si.D.</span>) | IPK: 3.19/4.00 (Sangat Memuaskan)</h4>
+                        <ul>
+                    Lulus pada September 2025 dan di wisuda pada bulan November 2025, dengan IPK 3.19 dengan Tugas Akhir(Skripsi) dengan topik terkait implementasi <span class="notranslate">Deep Learning</span> dan <span class="notranslate">Computer Vision</span> dalam Segmentasi Burned Area (area terbakar) di Sumatera Selatan dengan memanfaatkan data citra satelit dengan judul <strong>"Segmentasi Burned Area Menggunakan Model <span class="notranslate">U-Net</span> pada Citra <span class="notranslate">Landsat 9</span> (Studi Kasus: Sumatera Selatan)"</strong>. Selama masa studi, saya berfokus riset dan pembelajaran pada big data, <span class="notranslate">deep learning</span>, image processing serta analisis geospasial, yang menjadi fondasi kuat untuk karier teknis saya saat ini.
+                        </ul><br>
+                </div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>SMA Negeri 1 Gunung Talang</h3>
+                    <h4>Jurusan Matematika dan Ilmu Pengetahuan Alam (MIPA) | 2018 - 2021</h4>
+                </div>
+            </div>
     </section>
 
     <section id="experience">
         <div class="section-header">
-            <div class="section-subtitle">02. EXPERIENCE</div>
+            <div class="section-subtitle">03. EXPERIENCE</div>
             <h2 class="section-title">Pengalaman</h2>
         </div>
         <div class="timeline">
+            <div class="timeline-item">
+                <h3><span class="notranslate">Computer Vision Engineer</span></h3>
+                <h4>RotchNotation Tech-Lab | Juni 2026 - Sekarang</h4>
+                <ul>
+                
+                                <br>
+                    
+                </ul>
+            </div>
             <div class="timeline-item">
                 <h3><a href="https://maganghub.kemnaker.go.id/be/v1/storage/uploads/certificates/2026/06/sertifikat_1abf7303-6b3c-44ea-98ff-67d4f60676a4.pdf">Asisten Pranata Komputer</a></h3>
                 <h4>Badan Pusat Statistik Kota Solok | Desember 2025 - Juni 2026</h4>
@@ -284,7 +467,7 @@
                         ○ Ekstraksi insight serta arsitektur dan siklus analisis Big Data <br>
                         ○ Pemahaman bisnis dan algoritma Big Data <br>
                         ○ Web scraping, data preprocessing, dan visualisasi data skala besar <br>
-                        ○ Penerapan machine learning dalam Big Data serta proses deployment model <br>
+                        ○ Penerapan <span class="notranslate">machine learning</span> dalam Big Data serta proses deployment model <br>
                         ○ Keamanan data pasca pengolahan</li>
                     <li>Bertanggung jawab dalam mengembangkan kompetensi dan implementasi teknis dalam Big Data analytics, data engineering, dan penerapan data-driven solutions yang relevan dengan kebutuhan industri kepada praktikan.</li>
                 </ul>
@@ -293,25 +476,25 @@
                 <h3>Asisten Praktikum Analisis Data Spasial</h3>
                 <h4>Laboratorium Sains Data - Prodi Sains Data ITERA | Februari 2025 - Mei 2025</h4>
                 <ul>
-                    <li>Bertanggung jawab sebagai asisten dalam membantu pelaksanaan praktikum pengolahan dan analisis geospasial pada mata kuliah Analis Spasial di Prodi Sains Data ITERA. Dengan menggunakan berbagai tools seperti Python, R, QGIS, Google Earth Engine dan lainnya.<li></li>
+                    <li>Bertanggung jawab sebagai asisten dalam membantu pelaksanaan praktikum pengolahan dan analisis geospasial pada mata kuliah Analis Data Spasial di Prodi Sains Data ITERA. Dengan menggunakan berbagai tools seperti Python, R, QGIS, Google Earth Engine dan lainnya.<li></li>
                     <li>Bertanggung jawab dalam Mengembangkan dan mengimplementasikan modul praktikum yang mencakup: <br>
                             ○ Pengenalan QGIS dan teknik georeferencing 
                         <br>○ Geoprocessing dan spatial data analysis dengan R dan Python
                         <br>○ Interpolasi, spatial autocorrelation, klasifikasi, dan clustering
                         <br>○ Spatial dependency, spatial regression, serta pengenalan Google Earth Engine untuk analisis berbasis cloud cpmputing</li>
-                    <li>Bertanggung jawab dalam mengasah kemampuan dalam geospatial data analytics, geospatial modeling, dan penerapan machine learning untuk data geospasial sesuai kebutuhan industri kepada praktikan</li>
+                    <li>Bertanggung jawab dalam mengasah kemampuan dalam geospatial data analytics, geospatial modeling, dan penerapan <span class="notranslate">machine learning</span> untuk data geospasial sesuai kebutuhan industri kepada praktikan</li>
                 </ul>
             </div>
 
                         <div class="timeline-item">
-                <h3>Data Scientist Intern</h3>
-                <h4>Badan Pusat Statistik Provinsi Lampung | Jun 2024 - Agu 2024</h4>
-                Dalam posisi ini, saya bertugas sebagai Data Scientist di BPS Provinsi Lampung, sebagai bagian dari program memenuhi matakuliah kerja praktek/magang. Peran ini berfokus pada aktivitas operasional dan teknis yang berkaitan dengan pengolahan data (statistik, big data, dll) pada Tim Statistik Sosial dan Tim Protokoler dan Kehumasan, pada posisi ini saya: <br>
+                <h3><span class="notranslate">Data Scientist</span> Intern</h3>
+                <h4>Badan Pusat Statistik Provinsi Lampung | Juni 2024 - Agustus 2024</h4>
+                Dalam posisi ini, saya bertugas sebagai <span class="notranslate">Data Scientist</span> di BPS Provinsi Lampung, sebagai bagian dari program memenuhi matakuliah kerja praktek/magang. Peran ini berfokus pada aktivitas operasional dan teknis yang berkaitan dengan pengolahan data (statistik, big data, dll) pada Tim Statistik Sosial dan Tim Protokoler dan Kehumasan, pada posisi ini saya: <br>
                 <br>
                 <ul>
                     <li>Berkontribusi dalam berbagai kegiatan analisis dan pengembangan data di Tim Statistik Sosial serta Membantu Tim Humas dalam perancangan, pembuatan, pengembangan Produksi Konten dalam Kehumasan serta live streaming press release bulan berita resmi statistik.</li>
                     <li>Melakukan pemrosesan dan integrasi data di Badan Pusat Statistik (BPS) untuk mendukung pengambilan keputusan berbasis data.</li>
-                    <li>Membangun model citra malam (nighttime light imagery) untuk estimasi Indeks Kesulitan Geografis (IKG) di Kabupaten Lampung Selatan berbasis machine learning.</li>
+                    <li>Membangun model citra malam (nighttime light imagery) untuk estimasi Indeks Kesulitan Geografis (IKG) di Kabupaten Lampung Selatan berbasis <span class="notranslate">machine learning</span>.</li>
                     <li>Melaksanakan web scraping dan analisis data media berita online terkait aktivitas BPS Provinsi Lampung bagi analisis media daring oleh Tim Protokoler dan Kehumasan</li>
                     <li>Mengoptimalkan tabel query data pertanian guna meningkatkan efisiensi proses analisis dan akses data internal.</li>
                     <li>Memperoleh pengalaman langsung dalam penerapan data science untuk pengolahan, analisis, dan diseminasi data statistik di sektor pemerintahan.</li>
@@ -333,31 +516,30 @@
 
     <section id="projects">
         <div class="section-header">
-            <div class="section-subtitle">03. PROJECTS</div>
+            <div class="section-subtitle">04. PROJECTS</div>
             <h2 class="section-title">Proyek</h2>
         </div>
         <div class="grid-3">
 
             <div class="card">
                 <h3><a href="https://bps1372.github.io/sistem_antrian/frontend/panelvideo.html" target="_blank" rel="noopener noreferrer">Prototipe Sistem Antrian Layanan PST</a></h3>
-                <p>Website sistem pengambilan nomor antrian layanan PST di BPS Kota Solok</p>
+                <p>Merupakan prototipe sistem pengambilan nomor antrian layanan Pelayanan Statistik Terpadu (PST) di Badan Pusat Statistik Kota Solok. Merupakan proyek selama sebagai Asisten Pranata Komputer di di Badan Pusat Statistik Kota Solok</p>
                 <div class="tag-container">
                     <span class="tag">MySQL</span> <span class="tag">PHP</span> <span class="tag">HTML</span> <span class="tag">CSS</span> <span class="tag">Javascript</span>
                 </div>
             </div>
 
             <div class="card">
-                <h3><a href="https://conference.ut.ac.id/index.php/saintek/article/view/5073">Sistem Antrian Layanan PST</a></h3>
-                <p>Website sistem pengambilan nomor antrian layanan PST di BPS Kota Solok</p>
+                <h3><a href="https://aladin1372.streamlit.app/">ALADIN</a></h3>
+                <p>Sistem berbasis otomasi data untuk generate laporan perjalan dinas pegawai di Badan Pusat Statistik Kota Solok berbasis python dan stramlit. Merupakan proyek selama sebagai Asisten Pranata Komputer di di Badan Pusat Statistik Kota Solok</p>
                 <div class="tag-container">
-                    <span class="tag">MySQL</span> <span class="tag">PHP</span> <span class="tag">HTML</span> <span class="tag">CSS</span> <span class="tag">Javascript</span>
+                    <span class="tag">Data Automation</span> <span class="tag">Python</span> <span class="tag">Streamlit</span>
                 </div>
             </div>
-
 
             <div class="card">
                 <h3><a href="https://1372gesit.streamlit.app/">GESIT</a></h3>
-                <p>Sistem berbasis otomasi data untuk generate penomoran surat tertentu berbasis python</p>
+                <p>Sistem berbasis otomasi data untuk generate penomoran surat pengguna kuasa anggaran di Badan Pusat Statistik Kota Solok berbasis python dan stramlit. Merupakan proyek selama sebagai Asisten Pranata Komputer di di Badan Pusat Statistik Kota Solok</p>
                 <div class="tag-container">
                     <span class="tag">Data Automation</span> <span class="tag">Python</span> <span class="tag">Streamlit</span>
                 </div>
@@ -367,64 +549,69 @@
 
             <div class="card">
                 <h3><a href="https://bps1372.github.io/kudo/main.html">KUDO</a></h3>
-                <p>KUDO ("Korek Usaha Digital Online") adalah modul alur kerja automasi (automated workflow) untuk mengekstraksi (web scraping) data unit bisnis di area Solok dalam kebutuhan macthing data SBR (Statistical Business Register).</p>
+                <p>KUDO (Korek Usaha Digital Online) adalah modul alur kerja automasi (automated workflow) untuk mengekstraksi (web scraping) data unit bisnis di area Solok dalam kebutuhan macthing data SBR (Statistical Business Register). Merupakan proyek selama sebagai Asisten Pranata Komputer di di Badan Pusat Statistik Kota Solok</p>
                 <div class="tag-container">
-                    <span class="tag">Python</span> <span class="tag">Web Scraping</span> <span class="tag">Data Engineering</span>
+                     <span class="tag">Web Scraping</span> <span class="tag">Data Engineering</span> <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Apify</span> <span class="tag">Html dan CSS</span>
                 </div>
             </div>
 
 
             <div class="card">
                 <h3><a href="link">ARUNA</a></h3>
-                <p>Aplikasi automasi berbasis Streamlit mempercepat administrasi keuangan dan Anggaran BPS Kota Solok.</p>
+                <p>Prototipe aplikasi internal berbasis Appscript dalam perekaman dan pencatatan realisasi keuangan dan Anggaran di Badan Pusat Statistik Kota Solok. Merupakan proyek selama sebagai Asisten Pranata Komputer di di Badan Pusat Statistik Kota Solok</p>
                 <div class="tag-container">
-                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                    <span class="tag">Google Appscript</span> <span class="tag">Spreadsheet</span> <span class="tag">GoogleScript (GS)</span> <span class="tag">HTML dan CSS</span>
                 </div>
             </div>
+
             <div class="card">
                 <h3><a href="link">AEROVA</a></h3>
-                <p>Proyek deteksi pesawat (Aircraft) memanfaatkan AutoML Vertex AI di Google Cloud Platform.</p>
+                <p>Prototipe deteksi pesawat (Aircraft) memanfaatkan AutoML Vertex AI di Google Cloud Platform tanpa perlu proses pemrograman/coding. Merupakan proyek individu</p>
                 <div class="tag-container">
-                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                    <span class="tag">Google Cloud Platform</span> <span class="tag">AutoML</span> <span class="tag">Vertex AI</span> <span class="tag">Cloud Storage</span>
                 </div>
             </div>
+
             <div class="card">
-                <h3><a href="link">Segmentasi Burned Area menggunakan Model U-Net pada Citra Landsat 9 (Studi Kasus: Sumatera Selatan)</a></h3>
-                <p>Proyek Tugas Akhir dalam memperoleh gelar S.Si.D. ,melakukan proses segementasi burned area memanfaatkan citra satelit Landsat 9 menggunakan model deep learning (U-Net)</p>
+                <h3><a href="link">Segmentasi Burned Area menggunakan Model <span class="notranslate">U-Net</span> pada Citra <span class="notranslate">Landsat 9</span> (Studi Kasus: Sumatera Selatan)</a></h3>
+                <p>Merupakan proyek Tugas Akhir (skripsi) dalam memperoleh gelar sarjana di Sains Data ITERA, melakukan proses segementasi burned area memanfaatkan citra satelit <span class="notranslate">Landsat 9</span> menggunakan model <span class="notranslate">deep learning</span> (<span class="notranslate">U-Net</span>) pada wilayah Sumatera Selatan di pathrow 142062 dan 125062</p>
                 <div class="tag-container">
                     <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
                 </div>
             </div>
+
             <div class="card">
-                <h3><a href="link">Bird Classification using Audio Signals</a></h3>
-                <p>Proyek deeplearning dalam mengembangkan sistem klasifikasi burung berdasarkan suara burung.</p>
+                <h3><a href="link">AVCLA</a></h3>
+                <p>Merupakan proyek dalam mengembangkan sistem klasifikasi burung berdasarkan suara burung menggunakan model deep learning untuk pemanfaatan di Taman Nasional Way Kambas, Lampung. Merupakan proyek akhir pada mata kuliah Deep Learning di Sains Data ITERA</p>
                 <div class="tag-container">
                     <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
                 </div>
             </div>
+
             <div class="card">
                 <h3><a href="link">webgis</a></h3>
                 <p>Aplikasi........</p>
                 <div class="tag-container">
-                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                    <span class="tag">HTML dan CSS</span> <span class="tag">GIS</span>
                 </div>
             </div>
+
             <div class="card">
                 <h3><a href="link">webgis digitasis</a></h3>
                 <p>Aplikasi........</p>
                 <div class="tag-container">
-                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                    <span class="tag">HTML dan CSS</span> <span class="tag">GIS</span> <span class="tag">Digitisasi Peta</span> <span class="tag">PHP</span> <span class="tag">GeoJSON</span>
                 </div>
             </div>
             <div class="card">
-                <h3><a href="link">CITRA malam IKG</a></h3>
+                <h3><a href="link">Pemodelan Citra Malam dalam Estimasi Indeks Kesulitan Geografis (IKG) desa di Lampung Selatan</a></h3>
                 <p>Aplikasi........</p>
                 <div class="tag-container">
-                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                    <span class="tag">Python</span> <span class="tag">Machine Learning</span> <span class="tag">Prediksi</span>
                 </div>
             </div>
             <div class="card">
-                <h3><a href="link">semivariogram adsp</a></h3>
+                <h3><a href="link">Implementasi Semivariogram Kriging dalam Estimasi Curah Hujan di XXX</a></h3>
                 <p>Aplikasi........</p>
                 <div class="tag-container">
                     <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
@@ -479,38 +666,34 @@
                     <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
                 </div>
             </div>
-            <div class="card">
-                <h3><a href="link">vending Machine C++</a></h3>
-                <p>Aplikasi........</p>
-                <div class="tag-container">
-                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
-                </div>
             </div>
         </div>
     </section>
 
     <section id="achievements">
         <div class="section-header">
-            <div class="section-subtitle">04. ACHIEVEMENTS</div>
+            <div class="section-subtitle">05. ACHIEVEMENTS</div>
             <h2 class="section-title">Penghargaan</h2>
         </div>
         <div class="timeline">
             <div class="timeline-item card" style="padding: 25px; margin-bottom: 20px;">
-                <h3><a href="https://www.linkedin.com/in/alberanalafean/overlay/Honor/1054454934/treasury/?profileId=ACoAAEIiLDABOUDvmxTBhZDrf_2aD-ZlQlRCHMM" target="_blank">Author Presentasi <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
-                <h4>SEMNASTIK APTIKOM 2025 | Oktober 2025</h4>
-                <p>Merilis dataset independen berskala besar untuk segmentasi area terbakar menggunakan citra Landsat-9. Dataset ini memiliki standar publikasi akademik dengan DOI resmi: <strong>10.17632/cmzg4pshkx.1</strong>, yang dapat dimanfaatkan untuk riset keberlanjutan lingkungan.</p>
+                <h3><a href="https://www.linkedin.com/in/alberanalafean/overlay/Honor/1054454934/treasury/?profileId=ACoAAEIiLDABOUDvmxTBhZDrf_2aD-ZlQlRCHMM" target="_blank">Author Presentasi (Presenter) <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
+                <h4>SEMINAR NASIONAL TEKNOLOGI, INFORMASI dan KOMUNIKASI (SEMNASTIK) APTIKOM 2025 | Oktober 2025</h4>
+                <p>Menjadi Presenter dalam SEMINAR NASIONAL TEKNOLOGI, INFORMASI dan KOMUNIKASI (SEMNASTIK) APTIKOM 2025 yang diselenggarakan oleh Asosiasi Pendidikan Tinggi Ilmu Komputer di Kota Bandar Lampung, saya mempresentastikan riset dan juga merupakan skripsi saya ke seminar nasional dan berhasil terbit pada prosiding nasional.</p>
+                    
+                    
             </div>
             <div class="timeline-item card" style="padding: 25px;">
                 <h3><a href="https://www.linkedin.com/in/alberanalafean/overlay/Honor/1621109893/treasury/?profileId=ACoAAEIiLDABOUDvmxTBhZDrf_2aD-ZlQlRCHMM" target="_blank">Duta Wisata Pasaman <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
                 <h4>Pemerintahan Kabupaten Pasaman | Februari 2024</h4>
-                <p>Mewakili Kabupaten Pasaman dalam promosi pariwisata dan kebudayaan daerah.</p>
+                <p>Penghargaan dari Pemerintahan Kabupaten Pasaman karena telah mengabdi, meneliti, memajukan perekonomian serta pariwisata di Pasaman terkhususnya di Kawasan Geopark Equator Pasaman dalam kegiatan Kuliah Kerja Nyata (KKN) Tematik Geopark Equator Pasaman.</p>
             </div>
         </div>
     </section>
 
     <section id="organization">
         <div class="section-header">
-            <div class="section-subtitle">05. ORGANIZATION</div>
+            <div class="section-subtitle">06. ORGANIZATION</div>
             <h2 class="section-title">Organisasi</h2>
         </div>
         <div class="timeline">
@@ -540,7 +723,7 @@
 
     <section id="certification">
         <div class="section-header">
-            <div class="section-subtitle">06. CERTIFICATIONS</div>
+            <div class="section-subtitle">07. CERTIFICATIONS</div>
             <h2 class="section-title">Sertifikasi</h2>
         </div>
         <div class="grid-4">
@@ -549,7 +732,7 @@
                 <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">BNSP - LSP BPVP Padang | Juli 2026 (On Process)</p>
             </div>
             <div class="card" style="padding: 20px;">
-                <h3 style="font-size: 1rem;">Neural Networks and Deep Learning</h3>
+                <h3 style="font-size: 1rem;"><span class="notranslate">Neural Networks and Deep Learning</span></h3>
                 <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">DeepLearning.AI | Sep 2025</p>
             </div>
             <div class="card" style="padding: 20px;">
@@ -605,7 +788,7 @@
                 <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">BPJS Kesehatan RI | Nov 2023</p>
             </div>
             <div class="card" style="padding: 20px;">
-                <h3 style="font-size: 1rem;">Belajar Machine Learning untuk Pemula</h3>
+                <h3 style="font-size: 1rem;">Belajar <span class="notranslate">Machine Learning</span> untuk Pemula</h3>
                 <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Dicoding Indonesia | Juli 2023</p>
             </div>
             <div class="card" style="padding: 20px;">
@@ -617,7 +800,7 @@
 
     <section id="publication">
         <div class="section-header">
-            <div class="section-subtitle">07. PUBLICATION</div>
+            <div class="section-subtitle">08. PUBLICATION</div>
             <h2 class="section-title">Publikasi</h2>
         </div>
         <div class="timeline">
@@ -627,9 +810,9 @@
                 <p>This dataset comprises a curated collection of Landsat-9 Level-1 Top of Atmosphere (TOA) satellite imagery, rigorously processed to facilitate the training and benchmarking of deep learning algorithms, specifically semantic segmentation architectures such as U-Net, for burned area delineation. The geographic scope of this study encompasses South Sumatra Province, Indonesia, specifically within the WRS-2 path/rows 124/062 and 125/062. This region represents a critical area of interest due to its high susceptibility to recurrent forest and land fires. The dataset provides a robust baseline for remote sensing research aimed at automating the detection of fire-induced land cover changes using multispectral data.</p>
             </div>
             <div class="timeline-item card" style="padding: 25px; margin-bottom: 20px;">
-                <h3><a href="https://ojssemnastik2025.aptikomlampung.id/index.php/semnastik2025/article/view/46/" target="_blank">Segmentasi Burned Area menggunakan Model U-Net Pada Citra Landsat 9 (Studi Kasus: Sumatera Selatan) <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
+                <h3><a href="https://ojssemnastik2025.aptikomlampung.id/index.php/semnastik2025/article/view/46/" target="_blank">Segmentasi Burned Area menggunakan Model <span class="notranslate">U-Net</span> Pada Citra <span class="notranslate">Landsat 9</span> (Studi Kasus: Sumatera Selatan) <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
                 <h4>SEMNASTIK APTIKOM 2025 | 29 Desember 2025</h4>
-                <p>Kebakaran hutan dan lahan (karhutla) merupakan salah satu bencana yang paling sering terjadi di Indonesia, dengan 144 kejadian tercatat pada Agustus 2023. Kondisi ini menegaskan pentingnya penanganan pasca karhutla yang efektif. Penelitian ini bertujuan untuk melakukan segmentasi area terbakar (burned area) menggunakan citra satelit Landsat 9 dengan pendekatan deep learning berbasis model U-Net. Citra diproses dalam bentuk multiband komposit, serta dilengkapi dengan ekstraksi fitur Normalized Difference Vegetation Index (NDVI) dan Normalized Burn Ratio (NBR) sebagai input model. Pelatihan dan evaluasi model dilakukan pada wilayah Sumatera Selatan menggunakan metrik Binary Accuracy, Intersection over Union (IoU), Dice Coefficient, dan Binary Cross Entropy Loss. Hasil evaluasi menunjukkan nilai Binary Accuracy 0.93523, Intersection over Union (IoU) 0.70858, Dice Coefficient 0.82944, dan Binary Cross Entropy 0.18111. Hasil penelitian ini menunjukkan bahwa model U-Net dapat digunakan secara efektif dan efisien dalam mendeteksi area terbakar sebagai bagian dari sistem pemantauan karhutla berbasis citra satelit.</p>
+                <p>Kebakaran hutan dan lahan (karhutla) merupakan salah satu bencana yang paling sering terjadi di Indonesia, dengan 144 kejadian tercatat pada Agustus 2023. Kondisi ini menegaskan pentingnya penanganan pasca karhutla yang efektif. Penelitian ini bertujuan untuk melakukan segmentasi area terbakar (burned area) menggunakan citra satelit <span class="notranslate">Landsat 9</span> dengan pendekatan <span class="notranslate">deep learning</span> berbasis model <span class="notranslate">U-Net</span>. Citra diproses dalam bentuk multiband komposit, serta dilengkapi dengan ekstraksi fitur Normalized Difference Vegetation Index (NDVI) dan Normalized Burn Ratio (NBR) sebagai input model. Pelatihan dan evaluasi model dilakukan pada wilayah Sumatera Selatan menggunakan metrik Binary Accuracy, Intersection over Union (IoU), Dice Coefficient, dan Binary Cross Entropy Loss. Hasil evaluasi menunjukkan nilai Binary Accuracy 0.93523, Intersection over Union (IoU) 0.70858, Dice Coefficient 0.82944, dan Binary Cross Entropy 0.18111. Hasil penelitian ini menunjukkan bahwa model <span class="notranslate">U-Net</span> dapat digunakan secara efektif dan efisien dalam mendeteksi area terbakar sebagai bagian dari sistem pemantauan karhutla berbasis citra satelit.</p>
             </div>
             <div class="timeline-item card" style="padding: 25px;">
                 <h3><a href="https://conference.ut.ac.id/index.php/saintek/article/view/5073" target="_blank">IMPLEMENTASI MODEL TRANSFER LEARNING ARSITEKTUR CONVNEXT UNTUK KLASIFIKASI SUARA BURUNG DI TAMAN NASIONAL WAY KAMBAS <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
@@ -641,7 +824,7 @@
 
     <section id="skills">
         <div class="section-header">
-            <div class="section-subtitle">08. SKILLS</div>
+            <div class="section-subtitle">09. SKILLS</div>
             <h2 class="section-title">Kompetensi & Keahlian</h2>
         </div>
         <div class="grid-2">
@@ -670,7 +853,7 @@
                     <i class="fa-solid fa-chart-line" style="font-size: 1.5rem; color: var(--accent-blue);"></i>
                     <h3 style="margin: 0;">Data Science & Engineering</h3>
                 </div>
-                <div class="tag-container">
+                <div class="tag-container notranslate">
                     <span class="tag">Big Data</span>
                     <span class="tag">Big Data Analytics</span>
                     <span class="tag">Data Analysis</span>
@@ -757,7 +940,7 @@
                     <i class="fa-solid fa-users" style="font-size: 1.5rem; color: var(--accent-blue);"></i>
                     <h3 style="margin: 0;">Soft Skills & Management</h3>
                 </div>
-                <div class="tag-container">
+                <div class="tag-container notranslate">
                     <span class="tag">Problem Solving</span>
                     <span class="tag">Project Management</span>
                     <span class="tag">Easily Adaptable</span>
@@ -777,29 +960,34 @@
 
     <section id="contact" style="text-align: center; max-width: 800px; margin: 0 auto;">
         <div class="section-header" style="border: none;">
-            <div class="section-subtitle">09. CONTACT</div>
-            <h2 class="section-title" style="justify-content: center;">Mari Terhubung</h2>
+            <div class="section-subtitle">10. CONTACT</div>
         </div>
         
         <div class="card" style="padding: 50px;">
-            <h3 style="font-size: 2rem; margin-bottom: 15px; color: #fff;">Punya Proyek Inovatif?</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 30px; font-size: 1.1rem; line-height: 1.8;">
-                Mencari AI Engineer atau spesialis data yang kompeten dengan kebutuhan perusahaan atau startup anda? Hubungi saya untuk diskusi lebih lanjut atau melihat kode sumber lengkap dari portofolio saya.
+            <p style="color: var(--text-primary); margin-bottom: 30px; font-size: 1.1rem; line-height: 1.8;">
+                Ingin Mencari seorang <strong><span class="notranslate">Data Scientist, Data Analyst, Data Engineer, AI Engineer, ML Engineer, GIS Analyst, atapun spesialis data berbasis solusi </span></strong>yang kompeten dengan kebutuhan perusahaan, instansi ataupun startup anda? ataupun kerjasama berbasis proyek yang membutuhkan solusi berbasis data. Harap hubungi saya di kanal berikut.
             </p>
+            <h3 style="font-size: 2rem; margin-bottom: 15px; color: var(--text-primary);">Informasi Kontak</h3>
             <div class="social-links" style="justify-content: center;">
                 <a href="https://www.linkedin.com/in/alberanalafean/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://github.com/alberanalafean22" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
                 <a href="mailto:analafeanalber@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
                 <a href="https://wa.me/6283182616260" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/p/alberanalafean_/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
             </div>
+            <br>
+            <p>Terima kasih</p>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Alber Analafean. All rights reserved.</p>
+        <p>&copy; 2026 <span class="notranslate">Alber Analafean</span>. All rights reserved. Dikembangkan dengan sedikit sentuhan AI</p>
     </footer>
 
+
+<!-- ... bagian lainnya ... -->
+
     <script>
+        // Menu Toggle Logic
         const btn = document.getElementById('menuBtn');
         const overlay = document.getElementById('menuOverlay');
         const icon = btn.querySelector('i');
@@ -812,6 +1000,74 @@
                 icon.className = 'fa-solid fa-bars';
             }
         }
+
+        // Theme Toggle Logic
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        
+        // Initialize Theme from LocalStorage
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'light') {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        function toggleTheme() {
+            const root = document.documentElement;
+            let newTheme = 'light';
+            
+            if (root.getAttribute('data-theme') === 'light') {
+                newTheme = 'dark';
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+            
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Fungsi Google Translate Init
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'id',
+                includedLanguages: 'en,ja,ko,de',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Fungsi pindah bahasa
+        function changeLanguage(lang) {
+            if (lang === 'id') {
+                document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                location.reload();
+            } else {
+                document.cookie = "googtrans=/id/" + lang + "; path=/;";
+                location.reload();
+            }
+        }
+
+                    // Tambahkan fungsi ini
+            function toggleDropdown() {
+                document.getElementById("langDropdown").classList.toggle("show");
+            }
+
+            // Opsional: Tutup dropdown jika user klik di luar area
+            window.onclick = function(event) {
+            if (!event.target.matches('.control-btn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+                }
+            }
+            }
     </script>
+    <!-- Baris ini sudah diperbaiki -->
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
