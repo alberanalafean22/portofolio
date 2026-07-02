@@ -256,19 +256,26 @@
             margin-right: 10px;
         }
 
-        .lang-btn {
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 5px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            background: var(--bg-surface);
-            transition: all 0.2s;
-        }
-
-        .lang-btn:hover {
-            background: var(--text-primary);
-        }
+                    /* Update styling untuk kontrol tombol agar lebih besar */
+            .control-btn {
+                width: 50px;           /* Ukuran lebar */
+                height: 50px;          /* Ukuran tinggi */
+                border-radius: 12px;   /* Konsisten dengan menu-btn */
+                background: var(--bg-surface);
+                border: 1px solid var(--border-color);
+                color: var(--text-primary);
+                font-size: 1.2rem;     /* Ukuran ikon/teks di dalam */
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.3s ease;
+            }
+            
+            .control-btn:hover {
+                background: var(--text-primary);
+                color: var(--bg-base);
+            }
 
         /* Sembunyikan widget Google Translate default */
         .goog-te-banner-frame.skiptranslate, 
