@@ -261,6 +261,41 @@
         #google_translate_element {
             display: none;
         }
+
+                /* Container Dropdown */
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 60px; /* Posisi di bawah tombol */
+            left: 0;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            min-width: 150px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .dropdown-content.show { display: block; }
+
+        .dropdown-content div {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            color: var(--text-primary);
+            transition: 0.2s;
+        }
+
+        .dropdown-content div:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -270,13 +305,16 @@
             <i class="fa-solid fa-sun"></i>
         </button>
         
-        <!-- Language Switcher -->
-        <div class="language-switcher">
-            <div class="lang-btn" onclick="changeLanguage('id')">🇮🇩</div>
-            <div class="lang-btn" onclick="changeLanguage('en')">🇺🇸</div>
-            <div class="lang-btn" onclick="changeLanguage('ja')">🇯🇵</div>
-            <div class="lang-btn" onclick="changeLanguage('ko')">🇰🇷</div>
-            <div class="lang-btn" onclick="changeLanguage('de')">🇩🇪</div>
+        <!-- Ganti bagian language switcher lama dengan ini -->
+        <div class="lang-dropdown">
+            <button class="control-btn" onclick="toggleDropdown()" aria-label="Language">🌐</button>
+            <div id="langDropdown" class="dropdown-content">
+                <div onclick="changeLanguage('id')">🇮🇩 Indonesia</div>
+                <div onclick="changeLanguage('en')">🇺🇸 English</div>
+                <div onclick="changeLanguage('ja')">🇯🇵 Japan</div>
+                <div onclick="changeLanguage('ko')">🇰🇷 Korean</div>
+                <div onclick="changeLanguage('de')">🇩🇪 Deutsch</div>
+            </div>
         </div>
         
         <!-- Hidden Google Translate Element -->
@@ -983,6 +1021,24 @@
                 location.reload();
             }
         }
+
+                    // Tambahkan fungsi ini
+            function toggleDropdown() {
+                document.getElementById("langDropdown").classList.toggle("show");
+            }
+
+            // Opsional: Tutup dropdown jika user klik di luar area
+            window.onclick = function(event) {
+            if (!event.target.matches('.control-btn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+                }
+            }
+            }
     </script>
     <!-- Baris ini sudah diperbaiki -->
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
