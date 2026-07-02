@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title translate="no">Alber Analafean | Data & AI Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-base: #09090b; 
+            --bg-surface: #18181b;
+            --bg-card: rgba(24, 24, 27, 0.6);
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --gradient-text: linear-gradient(135deg, #60a5fa, #a78bfa);
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        /* LIGHT MODE VARIABLES */
+        [data-theme="light"] {
+            --bg-base: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
+        .mono-text { font-family: 'JetBrains Mono', monospace; }
+        a { text-decoration: none; color: inherit; transition: color 0.2s; }
+        a:hover { color: var(--accent-blue); }
+
+        /* THEME & TRANSLATE CONTROLS */
+        .top-controls {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 10000;
+            align-items: center;
+        }
+        .control-btn {
+            width: 50px; height: 50px; border-radius: 12px;
+            background: var(--bg-surface); backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color); color: var(--text-primary);
+            font-size: 1.2rem; cursor: pointer; display: flex;
+            justify-content: center; align-items: center; transition: all 0.3s ease;
+        }
+        .control-btn:hover { background: var(--text-primary); color: var(--bg-base); }
+        
+        /* Google Translate Widget Styling */
+        #google_translate_element select {
+            background: var(--bg-surface); color: var(--text-primary);
+            border: 1px solid var(--border-color); padding: 12px;
+            border-radius: 12px; font-family: 'Inter', sans-serif;
+            font-weight: 600; outline: none; cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #google_translate_element select:hover { border-color: var(--accent-blue); }
+        .goog-te-gadget { font-family: 'Inter', sans-serif !important; color: transparent !important; }
+        .goog-te-gadget .goog-te-combo { margin: 0 !important; }
+        .goog-logo-link { display: none !important; }
+        .goog-te-gadget span { display: none !important; }
+        body { top: 0 !important; } 
+        .skiptranslate iframe { display: none !important; }
+
+        /* MENU BUTTON & OVERLAY */
+        .menu-btn {
+            position: fixed; top: 30px; right: 30px;
+            width: 50px; height: 50px; border-radius: 12px;
+            background: var(--bg-surface); backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color); color: var(--text-primary);
+            font-size: 1.2rem; cursor: pointer; z-index: 10000;
+            display: flex; justify-content: center; align-items: center;
+            transition: all 0.3s ease;
+        }
+        .menu-btn:hover { background: var(--text-primary); color: var(--bg-base); }
+
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(9, 9, 11, 0.98); backdrop-filter: blur(15px);
+            z-index: 9999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        [data-theme="light"] .menu-overlay {
+            background: rgba(248, 250, 252, 0.98);
+        }
+        .menu-overlay.active { opacity: 1; pointer-events: auto; }
+        .menu-overlay ul { list-style: none; text-align: left; }
+        .menu-overlay ul li { margin: 10px 0; }
+        .menu-overlay ul li a {
+            font-family: 'Inter', sans-serif; font-size: 1.5rem; font-weight: 600;
+            color: var(--text-secondary); transition: all 0.3s ease; display: inline-block;
+        }
+        .menu-overlay ul li a:hover { color: var(--text-primary); transform: translateX(10px); }
+        .menu-overlay ul li a span { color: var(--accent-blue); font-size: 1.1rem; margin-right: 15px; font-family: 'JetBrains Mono', monospace; }
+
+        /* LAYOUT & SECTIONS */
+        section { padding: 100px 5% 40px; max-width: 1100px; margin: 0 auto; }
+        .section-header { margin-bottom: 50px; }
+        .section-title { font-size: 2rem; color: var(--text-primary); display: flex; align-items: center; gap: 15px; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border-color); margin-left: 10px; }
+        .section-subtitle {
+            font-family: 'JetBrains Mono', monospace; color: var(--accent-blue);
+            font-size: 0.9rem; margin-bottom: 8px;
+        }
+        .gradient-text {
+            background: var(--gradient-text); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; display: inline-block;
+        }
+
+        /* Hero */
+        #home {
+            min-height: 100vh; display: flex; align-items: center; justify-content: space-between; gap: 40px;
+            padding-top: 0;
+        }
+        .hero-content { flex: 1.2; }
+        .hero-visual { flex: 0.8; display: flex; justify-content: flex-end; }
+        
+        .hero-image-wrapper {
+            position: relative; width: 320px; height: 320px;
+            border-radius: 24px;
+            padding: 1px; background: var(--gradient-text);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transform: rotate(3deg); transition: transform 0.4s ease;
+        }
+        [data-theme="light"] .hero-image-wrapper {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .hero-image-wrapper:hover { transform: rotate(0deg) translateY(-5px); }
+        .hero-image-wrapper img {
+            width: 100%; height: 100%; object-fit: cover; object-position: center;
+            border-radius: 23px; border: 4px solid var(--bg-base);
+        }
+
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 14px; border-radius: 20px; background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2); color: #93c5fd;
+            font-size: 0.85rem; font-weight: 600; margin-bottom: 30px;
+        }
+        [data-theme="light"] .status-badge { color: #2563eb; }
+        .status-dot { width: 8px; height: 8px; background: #3b82f6; border-radius: 50%; box-shadow: 0 0 10px #3b82f6; }
+
+        #home h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; }
+        #home p { font-size: 1.1rem; color: var(--text-secondary); max-width: 550px; font-weight: 300; }
+
+        /* Modern Cards */
+        .card {
+            background: var(--bg-card); backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color); border-radius: 16px; padding: 30px;
+            transition: all 0.3s ease; height: 100%;
+        }
+        .card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-4px); }
+        [data-theme="light"] .card:hover { border-color: rgba(0,0,0,0.2); }
+        .card h3 { font-size: 1.25rem; margin-bottom: 12px; color: var(--text-primary); }
+        .card p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        /* Grids */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+        /* Minimal Timeline */
+        .timeline { border-left: 1px solid var(--border-color); margin-left: 15px; padding-left: 30px; display: flex; flex-direction: column; gap: 40px; }
+        .timeline-item { position: relative; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -36px; top: 6px;
+            width: 11px; height: 11px; border-radius: 50%; background: var(--bg-surface);
+            border: 2px solid var(--accent-blue);
+        }
+        .timeline-item h3 { font-size: 1.2rem; margin-bottom: 4px; }
+        .timeline-item h4 { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px; font-weight: 400;}
+        .timeline-item ul { list-style: none; color: var(--text-secondary); font-size: 0.95rem; }
+        .timeline-item ul li { margin-bottom: 8px; position: relative; padding-left: 18px; }
+        .timeline-item ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent-purple); }
+
+        /* Tags */
+        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+        .tag {
+            background: var(--bg-surface); color: var(--text-secondary);
+            padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Contacts */
+        .social-links { display: flex; gap: 15px; margin-top: 30px; }
+        .social-links a {
+            width: 45px; height: 45px; border-radius: 12px; background: var(--bg-surface);
+            border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; transition: 0.2s;
+        }
+        .social-links a:hover { background: var(--text-primary); color: var(--bg-base); }
+
+        footer { text-align: center; padding: 40px; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-secondary); margin-top: 80px; }
+
+        @media (max-width: 992px) {
+            #home { flex-direction: column; text-align: left; padding-top: 120px; justify-content: center; }
+            .hero-visual { justify-content: flex-start; margin-top: 40px; }
+            .hero-image-wrapper { width: 280px; height: 280px; transform: rotate(0deg); }
+        }
+        @media (max-width: 768px) {
+            #home h1 { font-size: 2.5rem; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .menu-overlay ul li a { font-size: 1.3rem; }
+            .top-controls { flex-direction: column; align-items: flex-start; top: 20px; left: 20px; }
+        }
+
+                /* Styling untuk Switcher Bahasa */
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+            margin-right: 10px;
+        }
+
+        .lang-btn {
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-surface);
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            background: var(--text-primary);
+        }
+
+        /* Sembunyikan widget Google Translate default */
+        .goog-te-banner-frame.skiptranslate, 
+        .goog-te-gadget-simple {
+            display: none !important;
+        }
+        #google_translate_element {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-controls">
+        <button id="themeToggleBtn" class="control-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+            <i class="fa-solid fa-sun"></i>
+        </button>
+        
+        <!-- Language Switcher -->
+        <div class="language-switcher">
+            <div class="lang-btn" onclick="changeLanguage('id')">🇮🇩</div>
+            <div class="lang-btn" onclick="changeLanguage('en')">🇺🇸</div>
+            <div class="lang-btn" onclick="changeLanguage('ja')">🇯🇵</div>
+            <div class="lang-btn" onclick="changeLanguage('ko')">🇰🇷</div>
+            <div class="lang-btn" onclick="changeLanguage('de')">🇩🇪</div>
+        </div>
+        
+        <!-- Hidden Google Translate Element -->
+        <div id="google_translate_element"></div>
+    </div>
+
+    <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Toggle Menu">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <ul>
+            <li><a href="#home" onclick="toggleMenu()"><span>00.</span> Home</a></li>
+            <li><a href="#about" onclick="toggleMenu()"><span>01.</span> About</a></li>
+            <li><a href="#education" onclick="toggleMenu()"><span>02.</span> Education</a></li>
+            <li><a href="#experience" onclick="toggleMenu()"><span>03.</span> Experience</a></li>
+            <li><a href="#projects" onclick="toggleMenu()"><span>04.</span> Projects</a></li>
+            <li><a href="#achievements" onclick="toggleMenu()"><span>05.</span> Achievements</a></li>
+            <li><a href="#organization" onclick="toggleMenu()"><span>06.</span> Organization</a></li>
+            <li><a href="#certification" onclick="toggleMenu()"><span>07.</span> Certification</a></li>
+            <li><a href="#publication" onclick="toggleMenu()"><span>08.</span> Publication</a></li>
+            <li><a href="#skills" onclick="toggleMenu()"><span>09.</span> Skills</a></li>
+            <li><a href="#contact" onclick="toggleMenu()"><span>10.</span> Contact</a></li>
+        </ul>
+    </div>
+
+    <section id="home">
+        <div class="hero-content">
+            <div class="status-badge">
+                <div class="status-dot"></div> Open to Work
+            </div>
+            <h2 class="mono-text" style="color: var(--accent-purple); font-size: 1.2rem; margin-bottom: 10px;">Hello, World! I'm</h2>
+            <h1><span class="notranslate">Alber Analafean</span>, <span class="notranslate">S.Si.D.</span><span class="gradient-text"></span></h1>
+            <h2><span class="gradient-text">Data, AI & Engineering</span></h2>
+            <p class="notranslate">AI Engineer | ML Engineer | Cloud Engineer | Data Analyst | Computer Vision Engineer | Data Scientist | Data Engineer | GIS/Remote Sensing/Geospatial Specialist | Automation Engineer</p><br>
+            <p>Hai, ini merupakan website portofolio saya dan juga saya sedang terbuka untuk bekerja saat ini. Silahkan Hubungi saya jika anda menawarkan proyek ataupun lowongan pekerjaan di perusahaan / Instansi / Startup anda.</p>
+            
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/alberanalafean/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://github.com/alberanalafean22" target="_blank"><i class="fa-brands fa-github"></i></a>
+                <a href="mailto:analafeanalber@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://wa.me/6283182616260" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-image-wrapper">
+                <img src="https://alberanalafean22.github.io/portofolio/A.jpeg" alt="Alber Analafean" translate="no">
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-header">
+            <div class="section-subtitle">01. ABOUT ME</div>
+            <h2 class="section-title">Tentang Saya</h2>
+        </div>
+        <div class="grid-1">
+            <div class="card">
+                <h3>Profil Profesional</h3>
+                <p>Saya adalah seorang profesional data yang terbiasa bekerja di ekosistem <span class="notranslate">Google Cloud Platform</span>, <span class="notranslate">BigQuery</span>, dan arsitektur <span class="notranslate">machine learning</span>. Saya berfokus pada efisiensi operasional bisnis melalui rekayasa perangkat software dan script automasi. Keahlian utama saya mencakup pengembangan full-stack untuk aplikasi data, serta ekstraksi informasi mendalam dari citra satelit (<span class="notranslate">Computer Vision</span>).</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+            <div class="section-header">
+                <div class="section-subtitle">02. EDUCATION</div>
+                <h2 class="section-title">Pendidikan</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3><a href="https://wisuda.itera.ac.id/validasi-ijazah/eyJpdiI6ImcxZkFHZWthVCtkTkZEeUNPODlHVWc9PSIsInZhbHVlIjoiUWlna29JZGx4THJoaVhBK2ZsWVJQWU5ZQkRuQU1sUVFWZjBNUnM3T2VFOD0iLCJtYWMiOiJjODhhN2E2N2QwZDBmNWIxMWFjYzgwZDYwMWNiM2FlMTFhZWE3YjcwOWVlODc3MzM0ZTIzNmIwZjBhMDFlMGUwIiwidGFnIjoiIn0=" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">
+                    Institut Teknologi Sumatera (ITERA)</a></h3>
+                    <h4>Prodi Sains Data, Fakultas Sains | September 2021 - September 2025</h4>
+                    <h4>Sarjana Sains Data (<span class="notranslate">S.Si.D.</span>) | IPK: 3.19/4.00 (Sangat Memuaskan)</h4>
+                        <ul>
+                    Lulus pada September 2025 dan di wisuda pada bulan November 2025, dengan IPK 3.19 dengan Tugas Akhir(Skripsi) dengan topik terkait implementasi <span class="notranslate">Deep Learning</span> dan <span class="notranslate">Computer Vision</span> dalam Segmentasi Burned Area (area terbakar) di Sumatera Selatan dengan memanfaatkan data citra satelit dengan judul <strong>"Segmentasi Burned Area Menggunakan Model <span class="notranslate">U-Net</span> pada Citra <span class="notranslate">Landsat 9</span> (Studi Kasus: Sumatera Selatan)"</strong>. Selama masa studi, saya berfokus riset dan pembelajaran pada big data, <span class="notranslate">deep learning</span>, image processing serta analisis geospasial, yang menjadi fondasi kuat untuk karier teknis saya saat ini.
+                        </ul><br>
+                </div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>SMA Negeri 1 Gunung Talang</h3>
+                    <h4>Jurusan Matematika dan Ilmu Pengetahuan Alam (MIPA) | 2018 - 2021</h4>
+                </div>
+            </div>
+    </section>
+
+    <section id="experience">
+        <div class="section-header">
+            <div class="section-subtitle">03. EXPERIENCE</div>
+            <h2 class="section-title">Pengalaman</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3><span class="notranslate">Computer Vision Engineer</span></h3>
+                <h4>RotchNotation Tech-Lab | Juni 2026 - Sekarang</h4>
+                <ul>
+                
+                                <br>
+                    
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <h3><a href="https://maganghub.kemnaker.go.id/be/v1/storage/uploads/certificates/2026/06/sertifikat_1abf7303-6b3c-44ea-98ff-67d4f60676a4.pdf">Asisten Pranata Komputer</a></h3>
+                <h4>Badan Pusat Statistik Kota Solok | Desember 2025 - Juni 2026</h4>
+                <ul>
+                Dalam posisi ini, saya bertugas sebagai Asisten Pranata Komputer di BPS Kota Solok, sebagai bagian dari program magang kontrak selama 6 bulan di bawah Program MagangHub Batch 3 yang diselenggarakan oleh Kementerian Ketenagakerjaan RI. Peran ini berfokus pada aktivitas operasional dan teknis dasar yang berkaitan dengan sistem informasi berbasis komputer dan pengolahan data (statistik, big data, dll) dalam membantu Pranata Komputer dan Tim IPDS BPS Kota Solok, memiliki tanggung jawab berupa: <br>
+                <br>
+                    <li>Bertanggung jawab untuk membantu Pranata Komputer dalam berbagai kegiatan pengolahan data, termasuk data Statistical Business Register (SBR), pengambilan data unit bisnis beserta koordinat berbasis web scraping, pengambilan data berita untuk analisis PDRB, aplikasi generate otomatis surat/laporan, analisis data, pembuatan website antrian layanan PST dan lain-lainnya</li>
+                    <li>Bertanggung jawab dalam terkait pengembangan dan inovasi dalam proses pengumpulan data terkait usaha digital di wilayah Kota Solok dalam memenuhi kebutuhan data prelist dalam menuju sensus ekonomi 2026</li>
+                    <li>Bertanggung jawab untuk membuat dan mengembangkan website ARUNA, yang mencatat rencana penarikan anggaran internal dan perekaman anggaran di dalam kantor untuk memfasilitasi analisis dan pemantauan bagi bendahara dan analis anggaran, meningkatkan produktifitas pencatatan sebesar hingga 70% </li>  
+                </ul>
+            </div>
+
+
+            <div class="timeline-item">
+                <h3>Asisten Praktikum Analisis Big Data</h3>
+                <h4>Laboratorium Sains Data - Prodi Sains Data ITERA | Februari 2025 - Mei 2025</h4>
+                <ul>
+                    <li>Bertanggung jawab sebagai asisten dalam membantu pelaksanaan praktikum pengolahan dan analisis Big Data pada mata kuliah Analis Big Data di Prodi Sains Data ITERA. Dengan menggunakan berbagai tools seperti PySpark, AWS, Hadoop, Hive dan lainnya.<li>
+                    <li>Bertanggung jawab dalam mengembangkan dan mengimplementasikan modul praktikum yang mencakup: <br>
+                        ○ Pengenalan Big Data dan kompleksitas permasalahan <br>
+                        ○ Pengumpulan, klasifikasi, dan manajemen data <br>
+                        ○ Ekstraksi insight serta arsitektur dan siklus analisis Big Data <br>
+                        ○ Pemahaman bisnis dan algoritma Big Data <br>
+                        ○ Web scraping, data preprocessing, dan visualisasi data skala besar <br>
+                        ○ Penerapan <span class="notranslate">machine learning</span> dalam Big Data serta proses deployment model <br>
+                        ○ Keamanan data pasca pengolahan</li>
+                    <li>Bertanggung jawab dalam mengembangkan kompetensi dan implementasi teknis dalam Big Data analytics, data engineering, dan penerapan data-driven solutions yang relevan dengan kebutuhan industri kepada praktikan.</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <h3>Asisten Praktikum Analisis Data Spasial</h3>
+                <h4>Laboratorium Sains Data - Prodi Sains Data ITERA | Februari 2025 - Mei 2025</h4>
+                <ul>
+                    <li>Bertanggung jawab sebagai asisten dalam membantu pelaksanaan praktikum pengolahan dan analisis geospasial pada mata kuliah Analis Spasial di Prodi Sains Data ITERA. Dengan menggunakan berbagai tools seperti Python, R, QGIS, Google Earth Engine dan lainnya.<li></li>
+                    <li>Bertanggung jawab dalam Mengembangkan dan mengimplementasikan modul praktikum yang mencakup: <br>
+                            ○ Pengenalan QGIS dan teknik georeferencing 
+                        <br>○ Geoprocessing dan spatial data analysis dengan R dan Python
+                        <br>○ Interpolasi, spatial autocorrelation, klasifikasi, dan clustering
+                        <br>○ Spatial dependency, spatial regression, serta pengenalan Google Earth Engine untuk analisis berbasis cloud cpmputing</li>
+                    <li>Bertanggung jawab dalam mengasah kemampuan dalam geospatial data analytics, geospatial modeling, dan penerapan <span class="notranslate">machine learning</span> untuk data geospasial sesuai kebutuhan industri kepada praktikan</li>
+                </ul>
+            </div>
+
+                        <div class="timeline-item">
+                <h3><span class="notranslate">Data Scientist</span> Intern</h3>
+                <h4>Badan Pusat Statistik Provinsi Lampung | Jun 2024 - Agu 2024</h4>
+                Dalam posisi ini, saya bertugas sebagai <span class="notranslate">Data Scientist</span> di BPS Provinsi Lampung, sebagai bagian dari program memenuhi matakuliah kerja praktek/magang. Peran ini berfokus pada aktivitas operasional dan teknis yang berkaitan dengan pengolahan data (statistik, big data, dll) pada Tim Statistik Sosial dan Tim Protokoler dan Kehumasan, pada posisi ini saya: <br>
+                <br>
+                <ul>
+                    <li>Berkontribusi dalam berbagai kegiatan analisis dan pengembangan data di Tim Statistik Sosial serta Membantu Tim Humas dalam perancangan, pembuatan, pengembangan Produksi Konten dalam Kehumasan serta live streaming press release bulan berita resmi statistik.</li>
+                    <li>Melakukan pemrosesan dan integrasi data di Badan Pusat Statistik (BPS) untuk mendukung pengambilan keputusan berbasis data.</li>
+                    <li>Membangun model citra malam (nighttime light imagery) untuk estimasi Indeks Kesulitan Geografis (IKG) di Kabupaten Lampung Selatan berbasis <span class="notranslate">machine learning</span>.</li>
+                    <li>Melaksanakan web scraping dan analisis data media berita online terkait aktivitas BPS Provinsi Lampung bagi analisis media daring oleh Tim Protokoler dan Kehumasan</li>
+                    <li>Mengoptimalkan tabel query data pertanian guna meningkatkan efisiensi proses analisis dan akses data internal.</li>
+                    <li>Memperoleh pengalaman langsung dalam penerapan data science untuk pengolahan, analisis, dan diseminasi data statistik di sektor pemerintahan.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <h3>Asisten Praktikum Struktur Data</h3>
+                <h4>Laboratorium Sains Data - Prodi Sains Data ITERA | September 2023 - Desember 2023</h4>
+                <ul>
+                    
+                    <li>Bertanggung jawab sebagai asisten dalam praktikum Struktur Data bagi mahasiswa semester 3 dengan fokus pada implementasi konsep secara praktis struktur data menggunakan Python di Google Colaboratory.</li>
+                    <li>Bertanggung jawab dalam Mengembangkan dan mengimplementasikan modul praktikum yang mencakup implementasi berbagai struktur data seperti array, linked list, stack, queue, tree, dictionary, dan graph.</li>
+                    <li>Bertanggung jawab dalam Mendukung pengembangan kemampuan mahasiswa dalam problem solving, algoritma, dan pemrograman terstruktur. serta Berkontribusi dalam penerapan konsep data structure yang relevan untuk kebutuhan analisis data dan pengembangan algoritma/AI di dunia industri.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-header">
+            <div class="section-subtitle">04. PROJECTS</div>
+            <h2 class="section-title">Proyek</h2>
+        </div>
+        <div class="grid-3">
+
+            <div class="card">
+                <h3><a href="https://bps1372.github.io/sistem_antrian/frontend/panelvideo.html" target="_blank" rel="noopener noreferrer">Prototipe Sistem Antrian Layanan PST</a></h3>
+                <p>Website sistem pengambilan nomor antrian layanan PST di BPS Kota Solok</p>
+                <div class="tag-container">
+                    <span class="tag">MySQL</span> <span class="tag">PHP</span> <span class="tag">HTML</span> <span class="tag">CSS</span> <span class="tag">Javascript</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><a href="https://conference.ut.ac.id/index.php/saintek/article/view/5073">Sistem Antrian Layanan PST</a></h3>
+                <p>Website sistem pengambilan nomor antrian layanan PST di BPS Kota Solok</p>
+                <div class="tag-container">
+                    <span class="tag">MySQL</span> <span class="tag">PHP</span> <span class="tag">HTML</span> <span class="tag">CSS</span> <span class="tag">Javascript</span>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <h3><a href="https://1372gesit.streamlit.app/">GESIT</a></h3>
+                <p>Sistem berbasis otomasi data untuk generate penomoran surat tertentu berbasis python</p>
+                <div class="tag-container">
+                    <span class="tag">Data Automation</span> <span class="tag">Python</span> <span class="tag">Streamlit</span>
+                </div>
+            </div>
+
+
+
+            <div class="card">
+                <h3><a href="https://bps1372.github.io/kudo/main.html">KUDO</a></h3>
+                <p>KUDO ("Korek Usaha Digital Online") adalah modul alur kerja automasi (automated workflow) untuk mengekstraksi (web scraping) data unit bisnis di area Solok dalam kebutuhan macthing data SBR (Statistical Business Register).</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Web Scraping</span> <span class="tag">Data Engineering</span>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <h3><a href="link">ARUNA</a></h3>
+                <p>Aplikasi automasi berbasis Streamlit mempercepat administrasi keuangan dan Anggaran BPS Kota Solok.</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">AEROVA</a></h3>
+                <p>Proyek deteksi pesawat (Aircraft) memanfaatkan AutoML Vertex AI di Google Cloud Platform.</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">Segmentasi Burned Area menggunakan Model <span class="notranslate">U-Net</span> pada Citra <span class="notranslate">Landsat 9</span> (Studi Kasus: Sumatera Selatan)</a></h3>
+                <p>Proyek Tugas Akhir dalam memperoleh gelar <span class="notranslate">S.Si.D.</span> ,melakukan proses segementasi burned area memanfaatkan citra satelit <span class="notranslate">Landsat 9</span> menggunakan model <span class="notranslate">deep learning</span> (<span class="notranslate">U-Net</span>)</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">Bird Classification using Audio Signals</a></h3>
+                <p>Proyek <span class="notranslate">deep learning</span> dalam mengembangkan sistem klasifikasi burung berdasarkan suara burung.</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">webgis</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">webgis digitasis</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">CITRA malam IKG</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">semivariogram adsp</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">pyspark abd</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">homecredit</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">KKN Tematik</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">Pemetaan</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">Dashboard beras</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">Dashboard covid</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">CART Bank</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3><a href="link">vending Machine C++</a></h3>
+                <p>Aplikasi........</p>
+                <div class="tag-container">
+                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements">
+        <div class="section-header">
+            <div class="section-subtitle">05. ACHIEVEMENTS</div>
+            <h2 class="section-title">Penghargaan</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item card" style="padding: 25px; margin-bottom: 20px;">
+                <h3><a href="https://www.linkedin.com/in/alberanalafean/overlay/Honor/1054454934/treasury/?profileId=ACoAAEIiLDABOUDvmxTBhZDrf_2aD-ZlQlRCHMM" target="_blank">Author Presentasi <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
+                <h4>SEMNASTIK APTIKOM 2025 | Oktober 2025</h4>
+                <p>Merilis dataset independen berskala besar untuk segmentasi area terbakar menggunakan citra <span class="notranslate">Landsat-9</span>. Dataset ini memiliki standar publikasi akademik dengan DOI resmi: <strong>10.17632/cmzg4pshkx.1</strong>, yang dapat dimanfaatkan untuk riset keberlanjutan lingkungan.</p>
+            </div>
+            <div class="timeline-item card" style="padding: 25px;">
+                <h3><a href="https://www.linkedin.com/in/alberanalafean/overlay/Honor/1621109893/treasury/?profileId=ACoAAEIiLDABOUDvmxTBhZDrf_2aD-ZlQlRCHMM" target="_blank">Duta Wisata Pasaman <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
+                <h4>Pemerintahan Kabupaten Pasaman | Februari 2024</h4>
+                <p>Mewakili Kabupaten Pasaman dalam promosi pariwisata dan kebudayaan daerah.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="organization">
+        <div class="section-header">
+            <div class="section-subtitle">06. ORGANIZATION</div>
+            <h2 class="section-title">Organisasi</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item card" style="padding: 25px; margin-bottom: 20px;">
+                <h3>Himpunan Mahasiswa Sains Data Adyatama ITERA (HMSD Adyatama ITERA)</h3>
+                <h4>Staff Divisi Ekstrakampus (Departemen Eksternal) | Februari 2023 - Februari 2024</h4>
+                <p>● Berperan dalam pengembangan dan pengelolaan hubungan eksternal HMSD Adyatama dengan berbagai pihak di luar kampus.
+                    <br>● Bertanggung jawab atas koordinasi dan manajemen tim pada Divisi Ekstra Kampus dan Departemen Eksternal.
+                    <br>● Menjalin dan membangun kemitraan strategis dengan pihak eksternal untuk mendukung pelaksanaan program kerja organisasi.
+                    <br>● Menjaga komunikasi yang efektif dan memastikan keberhasilan implementasi berbagaikegiatan kolaboratif.</p>
+            </div>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item card" style="padding: 25px; margin-bottom: 20px;">
+                <h3>Himpunan Mahasiswa Sains Data Adyatama ITERA (HMSD Adyatama ITERA)</h3>
+                <h4>Ketua Pelaksana VISODA (Visit of Sobat Data) | April 2023 - November 2023</h4>
+                <p>
+                    ● Berperan aktif dalam kegiatan VISODA (Visit of Sobat Data), yaitu acara kunjungan dan studi banding antara HIMATESDA Universitas Airlangga, HIMASADA UPN “Veteran” Jawa Timur,dengan HMSD Adyatama ITERA.
+                    <br>● Bertanggung jawab atas manajemen utama dan koordinasi pelaksanaan kegiatan VISODA dari tahap perencanaan hingga evaluasi.
+                    <br>● Menjalin komunikasi dan negosiasi dengan mitra eksternal untuk memastikan keberhasilan kolaborasi antar lembaga.
+                    <br>● Menyusun rencana kegiatan, mengelola pelaksanaan operasional, serta melakukan evaluasi menyeluruh terhadap hasil dan keberlanjutan acara.
+                </p>   
+            </div>
+        </div>
+    </section>
+
+    <section id="certification">
+        <div class="section-header">
+            <div class="section-subtitle">07. CERTIFICATIONS</div>
+            <h2 class="section-title">Sertifikasi</h2>
+        </div>
+        <div class="grid-4">
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Analisis Data (Data Analyst)</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">BNSP - LSP BPVP Padang | Juli 2026 (On Process)</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;"><span class="notranslate">Neural Networks and Deep Learning</span></h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">DeepLearning.AI | Sep 2025</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Build a Data Warehouse with BigQuery</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Google Cloud | Agu 2025</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Classify Images with TensorFlow on Google Cloud</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Google Cloud | Apr 2025</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">ElevAlte - AI Beginner</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Digital Talent Scholarship | Mar 2025</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Engineer Data for Predictive Modeling with BigQuery ML</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Google Cloud | Feb 2025</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Data Science on GCP: Designing Data Warehouses</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">CompTIA | Jan 2025</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Big Data di Era AI</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Linkedin Learning | Jan 2025</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Belajar Dasar Data Science</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Dicoding Indonesia | Sep 2024</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Belajar Dasar AI</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Dicoding Indonesia | Jan 2026</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Belajar Dasar SQL</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Dicoding Indonesia | 2024</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Create ML Models with BigQuery ML</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Google Cloud | Sep 2024</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Belajar Dasar Visualisasi Data</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Dicoding Indonesia | Nov 2023</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Memulai Pemrograman dengan Python</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Dicoding Indonesia | Jan 2026</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Bootcamp Understanding Data Analytics (Healthkathon BPJS)</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">BPJS Kesehatan RI | Nov 2023</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Belajar <span class="notranslate">Machine Learning</span> untuk Pemula</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Dicoding Indonesia | Juli 2023</p>
+            </div>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 1rem;">Belajar Dasar Manajemen Proyek</h3>
+                <p class="mono-text" style="font-size: 0.8rem; color: var(--accent-purple);">Dicoding Indonesia | Juli 2023</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="publication">
+        <div class="section-header">
+            <div class="section-subtitle">08. PUBLICATION</div>
+            <h2 class="section-title">Publikasi</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item card" style="padding: 25px; margin-bottom: 20px;">
+                <h3><a href="https://doi.org/10.17632/cmzg4pshkx.1" target="_blank">Dataset of Deep Learning from Landsat-9 Satellite Images for Segmentation Burned Areas in South Sumatera <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
+                <h4>Mendeley Dataset | 5 Februari 2026</h4>
+                <p>This dataset comprises a curated collection of Landsat-9 Level-1 Top of Atmosphere (TOA) satellite imagery, rigorously processed to facilitate the training and benchmarking of deep learning algorithms, specifically semantic segmentation architectures such as U-Net, for burned area delineation. The geographic scope of this study encompasses South Sumatra Province, Indonesia, specifically within the WRS-2 path/rows 124/062 and 125/062. This region represents a critical area of interest due to its high susceptibility to recurrent forest and land fires. The dataset provides a robust baseline for remote sensing research aimed at automating the detection of fire-induced land cover changes using multispectral data.</p>
+            </div>
+            <div class="timeline-item card" style="padding: 25px; margin-bottom: 20px;">
+                <h3><a href="https://ojssemnastik2025.aptikomlampung.id/index.php/semnastik2025/article/view/46/" target="_blank">Segmentasi Burned Area menggunakan Model <span class="notranslate">U-Net</span> Pada Citra <span class="notranslate">Landsat 9</span> (Studi Kasus: Sumatera Selatan) <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
+                <h4>SEMNASTIK APTIKOM 2025 | 29 Desember 2025</h4>
+                <p>Kebakaran hutan dan lahan (karhutla) merupakan salah satu bencana yang paling sering terjadi di Indonesia, dengan 144 kejadian tercatat pada Agustus 2023. Kondisi ini menegaskan pentingnya penanganan pasca karhutla yang efektif. Penelitian ini bertujuan untuk melakukan segmentasi area terbakar (burned area) menggunakan citra satelit <span class="notranslate">Landsat 9</span> dengan pendekatan <span class="notranslate">deep learning</span> berbasis model <span class="notranslate">U-Net</span>. Citra diproses dalam bentuk multiband komposit, serta dilengkapi dengan ekstraksi fitur Normalized Difference Vegetation Index (NDVI) dan Normalized Burn Ratio (NBR) sebagai input model. Pelatihan dan evaluasi model dilakukan pada wilayah Sumatera Selatan menggunakan metrik Binary Accuracy, Intersection over Union (IoU), Dice Coefficient, dan Binary Cross Entropy Loss. Hasil evaluasi menunjukkan nilai Binary Accuracy 0.93523, Intersection over Union (IoU) 0.70858, Dice Coefficient 0.82944, dan Binary Cross Entropy 0.18111. Hasil penelitian ini menunjukkan bahwa model <span class="notranslate">U-Net</span> dapat digunakan secara efektif dan efisien dalam mendeteksi area terbakar sebagai bagian dari sistem pemantauan karhutla berbasis citra satelit.</p>
+            </div>
+            <div class="timeline-item card" style="padding: 25px;">
+                <h3><a href="https://conference.ut.ac.id/index.php/saintek/article/view/5073" target="_blank">IMPLEMENTASI MODEL TRANSFER LEARNING ARSITEKTUR CONVNEXT UNTUK KLASIFIKASI SUARA BURUNG DI TAMAN NASIONAL WAY KAMBAS <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8em; margin-left: 5px;"></i></a></h3>
+                <h4>Prosiding Seminar Nasional Sains dan Teknologi - Universita Terbuka | 21 Februari 2025</h4>
+                <p>Deforestasi di Sumatera telah mengancam keanekaragaman hayati dan habitat satwa liar, terutama burung. Penelitian ini bertujuan mengimplementasikan model transfer learning arsitektur ConvNeXt untuk mengklasifikasikan suara burung di Taman Nasional Way Kambas sebagai upaya pemantauan dan konservasi keanekaragaman hayati. Metode penelitian menggunakan pendekatan biofoni dengan ekstraksi fitur menggunakan Mels Spectrogram untuk merepresentasikan karakteristik frekuensi suara burung secara visual. Pemodelan transfer learning ConvNeXt dilakukan dengan dua pendekatan: augmentasi dan non-augmentasi data, di mana teknik augmentasi diterapkan untuk meningkatkan variabilitas model dalam mengenali berbagai variasi suara burung. Hasil penelitian menunjukkan model ConvNeXt dengan augmentasi data memberikan performa yang signifikan lebih baik dalam mengidentifikasi spesies burung dengan akurasi 71% berdasarkan karakteristik suaranya. Penelitian ini memberikan kontribusi penting dalam pengembangan teknologi pemantauan biodiversitas menggunakan kecerdasan buatan yang berpotensi menjadi alat efektif untuk memantau perubahan ekosistem dan mendukung upaya konservasi di Taman Nasional Way Kambas.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="section-header">
+            <div class="section-subtitle">09. SKILLS</div>
+            <h2 class="section-title">Kompetensi & Keahlian</h2>
+        </div>
+        <div class="grid-2">
+            
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                    <i class="fa-solid fa-brain" style="font-size: 1.5rem; color: var(--accent-blue);"></i>
+                    <h3 style="margin: 0;">AI & Machine Learning</h3>
+                </div>
+                <div class="tag-container notranslate">
+                    <span class="tag">Artificial Intelligence (AI)</span>
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">Deep Learning</span>
+                    <span class="tag">Neural Networks and Deep Learning</span>
+                    <span class="tag">Computer Vision</span>
+                    <span class="tag">TensorFlow</span>
+                    <span class="tag">PyTorch</span>
+                    <span class="tag">Keras</span>
+                    <span class="tag">Apache Spark ML</span>
+                    <span class="tag">MLOps</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                    <i class="fa-solid fa-chart-line" style="font-size: 1.5rem; color: var(--accent-blue);"></i>
+                    <h3 style="margin: 0;">Data Science & Engineering</h3>
+                </div>
+                <div class="tag-container notranslate">
+                    <span class="tag">Big Data</span>
+                    <span class="tag">Big Data Analytics</span>
+                    <span class="tag">Data Analysis</span>
+                    <span class="tag">Data Mining</span>
+                    <span class="tag">Data Processing</span>
+                    <span class="tag">Data Warehousing</span>
+                    <span class="tag">Data Pipelines</span>
+                    <span class="tag">Analitik Data</span>
+                    <span class="tag">Analisis Data</span>
+                    <span class="tag">Analytics</span>
+                    <span class="tag">Statistics</span>
+                    <span class="tag">Engineering</span>
+                    <span class="tag">Data Scraping</span>
+                    <span class="tag">Apache Airflow</span>
+                    <span class="tag">Data Security</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                    <i class="fa-solid fa-earth-asia" style="font-size: 1.5rem; color: var(--accent-blue);"></i>
+                    <h3 style="margin: 0;">GIS & Spatial Analysis</h3>
+                </div>
+                <div class="tag-container notranslate">
+                    <span class="tag">Geographic Information Systems (GIS)</span>
+                    <span class="tag">Spatial Analysis</span>
+                    <span class="tag">QGIS</span>
+                    <span class="tag">Google Earth</span>
+                    <span class="tag">Google Earth Engine</span>
+                    <span class="tag">Web GIS</span>
+                    <span class="tag">Geostatistics</span>
+                    <span class="tag">Spatial Databases</span>
+                    <span class="tag">Leaflet</span>
+                    <span class="tag">GeoJSON</span>
+                    <span class="tag">Pemetaan</span>
+                    <span class="tag">Drone</span>
+                    <span class="tag">Digital Image Processing</span>
+                    <span class="tag">PostGIS</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                    <i class="fa-solid fa-code" style="font-size: 1.5rem; color: var(--accent-blue);"></i>
+                    <h3 style="margin: 0;">Cloud & Programming</h3>
+                </div>
+                <div class="tag-container notranslate">
+                    <span class="tag">Python</span>
+                    <span class="tag">R</span>
+                    <span class="tag">SQL</span>
+                    <span class="tag">C++</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">HTML/CSS</span>
+                    <span class="tag">Google Cloud Platform (GCP)</span>
+                    <span class="tag">Google BigQuery</span>
+                    <span class="tag">Vertex AI</span>
+                    <span class="tag">Cloud Storage</span>
+                    <span class="tag">PySpark</span>
+                    <span class="tag">Databases</span>
+                    <span class="tag">MySQL</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                    <i class="fa-solid fa-palette" style="font-size: 1.5rem; color: var(--accent-blue);"></i>
+                    <h3 style="margin: 0;">BI, Design & Media</h3>
+                </div>
+                <div class="tag-container notranslate">
+                    <span class="tag">Data Visualization</span>
+                    <span class="tag">Google Data Studio</span>
+                    <span class="tag">Power BI</span>
+                    <span class="tag">Looker</span>
+                    <span class="tag">Graphic Design</span>
+                    <span class="tag">Design</span>
+                    <span class="tag">Adobe Photoshop</span>
+                    <span class="tag">Adobe Spark</span>
+                    <span class="tag">Audio Processing</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                    <i class="fa-solid fa-users" style="font-size: 1.5rem; color: var(--accent-blue);"></i>
+                    <h3 style="margin: 0;">Soft Skills & Management</h3>
+                </div>
+                <div class="tag-container notranslate">
+                    <span class="tag">Problem Solving</span>
+                    <span class="tag">Project Management</span>
+                    <span class="tag">Easily Adaptable</span>
+                    <span class="tag">Collaborative Work</span>
+                    <span class="tag">Teamwork</span>
+                    <span class="tag">Team Coordination</span>
+                    <span class="tag">Negotiation</span>
+                    <span class="tag">Relationship Building</span>
+                    <span class="tag">Public Relations</span>
+                    <span class="tag">Community Empowerment</span>
+                    <span class="tag">Ideas Development</span>
+                    <span class="tag">Event Planning</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="text-align: center; max-width: 800px; margin: 0 auto;">
+        <div class="section-header" style="border: none;">
+            <div class="section-subtitle">10. CONTACT</div>
+        </div>
+        
+        <div class="card" style="padding: 50px;">
+            <h3 style="font-size: 2rem; margin-bottom: 15px; color: #fff;">Punya Proyek Inovatif?</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 30px; font-size: 1.1rem; line-height: 1.8;">
+                Mencari <span class="notranslate">AI Engineer</span> atau spesialis data yang kompeten dengan kebutuhan perusahaan atau startup anda? Hubungi saya untuk diskusi lebih lanjut atau melihat kode sumber lengkap dari portofolio saya.
+            </p>
+            <div class="social-links" style="justify-content: center;">
+                <a href="https://www.linkedin.com/in/alberanalafean/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://github.com/alberanalafean22" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="mailto:analafeanalber@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://wa.me/6283182616260" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 <span class="notranslate">Alber Analafean</span>. All rights reserved.</p>
+    </footer>
+
+
+<!-- ... bagian lainnya ... -->
+
+    <script>
+        // Menu Toggle Logic
+        const btn = document.getElementById('menuBtn');
+        const overlay = document.getElementById('menuOverlay');
+        const icon = btn.querySelector('i');
+
+        function toggleMenu() {
+            overlay.classList.toggle('active');
+            if(overlay.classList.contains('active')){
+                icon.className = 'fa-solid fa-xmark';
+            } else {
+                icon.className = 'fa-solid fa-bars';
+            }
+        }
+
+        // Theme Toggle Logic
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        
+        // Initialize Theme from LocalStorage
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'light') {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+        }
+
+        function toggleTheme() {
+            const root = document.documentElement;
+            let newTheme = 'light';
+            
+            if (root.getAttribute('data-theme') === 'light') {
+                newTheme = 'dark';
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+            
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Fungsi Google Translate Init
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'id',
+                includedLanguages: 'en,ja,ko,de',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Fungsi pindah bahasa
+        function changeLanguage(lang) {
+            if (lang === 'id') {
+                document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                location.reload();
+            } else {
+                document.cookie = "googtrans=/id/" + lang + "; path=/;";
+                location.reload();
+            }
+        }
+    </script>
+    <!-- Baris ini sudah diperbaiki -->
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
