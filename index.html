@@ -6,7 +6,8 @@
     <title translate="no">Alber Analafean | Data & AI Engineer</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     
     <style>
         :root {
@@ -155,8 +156,8 @@
 
         /* Hero */
         #home {
-            min-height: 100vh; display: flex; align-items: center; justify-content: space-between; gap: 40px;
-            padding-top: 0;
+            min-height: 80vh; display: flex; align-items: center; justify-content: space-between; gap: 40px;
+            padding-top: 40px; padding-bottom: 20px;
         }
         .hero-content { flex: 1.2; }
         .hero-visual { flex: 0.8; display: flex; justify-content: flex-end; }
@@ -321,6 +322,88 @@
             background: var(--accent-blue);
             color: white;
         }
+
+                        /* =========================================
+                INFINITE SCROLL TOOLS MARQUEE (BANNER LOGO)
+                ========================================= */
+    .tools-marquee-container {
+            width: 100%;
+            overflow: hidden;
+            padding: 15px 0; /* Jarak atas-bawah diperkecil agar lebih ringkas */
+            background: transparent; /* Ubah menjadi transparan penuh */
+            border: none; /* Hilangkan garis border atas dan bawah */
+            position: relative;
+            display: flex;
+            z-index: 10;
+            margin-bottom: 40px; /* Jarak menuju ke section About */
+        }
+
+        /* HAPUS EFEK GRADASI BAYANGAN DI KIRI DAN KANAN AGAR BENAR-BENAR TRANSPARAN BERSIH */
+        .tools-marquee-container::before,
+        .tools-marquee-container::after {
+            display: none; 
+        }
+
+        .tools-marquee-content {
+            display: flex;
+            gap: 16px;
+            animation: scroll-tools 40s linear infinite;
+            width: max-content;
+        }
+
+        .tools-marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        /* 3. PERBAIKAN TAMPILAN PILL LOGO */
+        .tool-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(24, 24, 27, 0.4); /* Buat background tombolnya sedikit transparan dengan efek kaca */
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        /* Penyesuaian saat mode terang (Light Mode) aktif */
+        [data-theme="light"] .tool-pill {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .tool-pill:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(59, 130, 246, 0.15);
+        }
+
+        .tool-pill i {
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: color 0.3s ease;
+        }
+
+        .tool-pill:hover i {
+            color: var(--accent-blue);
+        }
+
+        @keyframes scroll-tools {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -390,6 +473,46 @@
             </div>
         </div>
     </section>
+
+
+    <!-- TOOLS & TECHNOLOGIES MARQUEE BANNER -->
+    <div class="tools-marquee-container notranslate">
+        <div class="tools-marquee-content">
+            <div class="tool-pill"><i class="fa-solid fa-server"></i> Databases</div>
+            <div class="tool-pill"><i class="devicon-mysql-plain"></i> MySQL</div>
+            <div class="tool-pill"><i class="devicon-tensorflow-original"></i> TensorFlow</div>
+            <div class="tool-pill"><i class="devicon-pytorch-original"></i> PyTorch</div>
+            <div class="tool-pill"><i class="devicon-keras-plain"></i> Keras</div>
+            <div class="tool-pill"><i class="devicon-postgresql-plain"></i> PostGIS</div>
+            <div class="tool-pill"><i class="devicon-python-plain"></i> Python</div>
+            <div class="tool-pill"><i class="devicon-r-plain"></i> R</div>
+            <div class="tool-pill"><i class="devicon-azuresqldatabase-plain"></i> SQL</div>
+            <div class="tool-pill"><i class="devicon-cplusplus-plain"></i> C++</div>
+            <div class="tool-pill"><i class="devicon-javascript-plain"></i> JavaScript</div>
+            <div class="tool-pill"><i class="devicon-html5-plain"></i> HTML/CSS</div>
+            <div class="tool-pill"><i class="devicon-googlecloud-plain"></i> Google Cloud Platform (GCP)</div>
+            <div class="tool-pill"><i class="devicon-spark-plain"></i> PySpark</div>
+            <div class="tool-pill"><i class="fa-solid fa-server"></i> Databases</div>
+            <div class="tool-pill"><i class="devicon-mysql-plain"></i> MySQL</div>
+            <div class="tool-pill"><i class="devicon-tensorflow-original"></i> TensorFlow</div>
+            <div class="tool-pill"><i class="devicon-pytorch-original"></i> PyTorch</div>
+            <div class="tool-pill"><i class="devicon-keras-plain"></i> Keras</div>
+            <div class="tool-pill"><i class="devicon-postgresql-plain"></i> PostGIS</div>
+            <div class="tool-pill"><i class="devicon-python-plain"></i> Python</div>
+            <div class="tool-pill"><i class="devicon-r-plain"></i> R</div>
+            <div class="tool-pill"><i class="devicon-azuresqldatabase-plain"></i> SQL</div>
+            <div class="tool-pill"><i class="devicon-cplusplus-plain"></i> C++</div>
+            <div class="tool-pill"><i class="devicon-javascript-plain"></i> JavaScript</div>
+            <div class="tool-pill"><i class="devicon-html5-plain"></i> HTML/CSS</div>
+            <div class="tool-pill"><i class="devicon-googlecloud-plain"></i> Google Cloud Platform (GCP)</div>
+            <div class="tool-pill"><i class="devicon-spark-plain"></i> PySpark</div>
+            <div class="tool-pill"><i class="fa-solid fa-server"></i> Databases</div>
+            <div class="tool-pill"><i class="devicon-mysql-plain"></i> MySQL</div>
+
+
+
+        </div>
+    </div>
 
     <section id="about">
         <div class="section-header">
@@ -622,14 +745,6 @@
                 <p>Merupakan proyek akhir dalam memenuhi matakuliah Analisis Big Data, proyek ini melakukan pengolahan dan analisis big data denga menggunakan PySpark</p>
                 <div class="tag-container">
                     <span class="tag">Pyspark</span> <span class="tag">Big Data Analysis</span> 
-                </div>
-            </div>
-
-            <div class="card">
-                <h3><a href="link">...........</a></h3>
-                <p>..........</p>
-                <div class="tag-container">
-                    <span class="tag">Python</span> <span class="tag">Streamlit</span> <span class="tag">Workflow Automation</span>
                 </div>
             </div>
         </div>
